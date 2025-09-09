@@ -1,37 +1,32 @@
-'use client'
-import { Button } from "../ui/button"
 import Image from "next/image"
+import { Button } from "../ui/button"
 import clsx from "clsx"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
-type SidebarItemProps = {
-  icon?: string,
-  label?: string,
-  isActive?: boolean,
-  onClick?: () => void,
-  isLast?: boolean,
-  tooltipSide?: "top" | "right" | "bottom" | "left"
-  children?: React.ReactNode // for custom icons (dark/light mode toggle)
+
+type MenuItems = {
+  icon: string,
+  label: string
 }
 
-export default function SidebarItem({ icon, label, isActive, onClick, isLast, tooltipSide = "right",
-  children, }: SidebarItemProps) {
+type SidebarItemProps = {
+  category: string,
+  menusData: MenuItems[],
+  isLast: boolean
+}
+export default function SidebarItem({ category, menusData, isLast }: SidebarItemProps) {
   return (
     <>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant='ghost'
-            onClick={onClick}
-            className={clsx('flex justify-center items-center px-3 py-5.5 rounded-sm  hover:bg-blue-100', isLast && 'mt-5', isActive && 'bg-blue-100')}
-          >
-            {children ? children : icon && <Image src={icon} height={20} width={20} alt={label} />}
-            {/* <Image src={icon} height={20} width={20} alt="logo" /> */}
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent side={tooltipSide} className="bg-[#1b54d0] px-3 py-1 text-sm text-white rounded-sm ml-1">
-          {label}
-        </TooltipContent>
-      </Tooltip>
+      <p className={clsx("text-[#000000b3] text-xs font-[650] px-2.5 my-2", isLast ? 'mt-8' : '')}>{category}</p>
+      {menusData.map((nestedItem, nestedIndex) => (
+        <Button
+          variant='ghost'
+          className="flex flex-row items-center px-2 justify-start  my-2 space-x-1 w-[100%] rounded-sm  hover:bg-blue-100"
+        >
+
+          <Image src={nestedItem.icon} alt="dashboard-logo" height={20} width={20} />
+          <span className="rext-sm">{nestedItem.label}</span>
+        </Button>
+      ))}
+
     </>
   )
 }

@@ -28,8 +28,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex h-screen items-center">
-          <Sidebar />
+        <div className="flex flex-row">
+          <div className="flex h-screen items-center">
+            <Sidebar />
+          </div>
+          {/* Page content on the right */}
+          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-[#fafafa]">
+            {children}
+          </main>
         </div>
 
 
